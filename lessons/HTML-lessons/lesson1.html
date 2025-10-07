@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML Lesson 1 – WebBloom</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    .dark-mode { background-color: #1a202c; color: #f7fafc; }
+  </style>
+</head>
+<body class="bg-white text-gray-800 transition-colors duration-300" id="page">
+
+ 
+  <header class="bg-pink-100 shadow sticky top-0 z-50 flex justify-between items-center p-4">
+    <h1 class="text-2xl font-bold text-pink-500">HTML Lesson 1</h1>
+    <div class="flex justify-center items-center" >
+       <a href="../../webbloom/learn-html.html">Lesson</a>
+    <nav>
+    <a href="../../chatbot/index1.html"  class="text-white mx-4 px-4 py-2 rounded-full" style="background-color: #FA9DA6; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f98a96'" onmouseout="this.style.backgroundColor='#FA9DA6'">Chatbot</a>
+    </nav>
+    <div class="flex items-center space-x-4">
+      <button onclick="toggleDarkMode()" class="bg-gray-200 px-3 py-1 rounded">🌓</button>
+    </div>
+    </div>
+  </header>
+
+  <section class="p-6 max-w-4xl mx-auto space-y-8">
+
+   
+    <div>
+      <h2 class="text-3xl font-semibold mb-2">Introduction to HTML</h2>
+      <p class="mb-4">HTML stands for HyperText Markup Language. It's the structure of the web.</p>
+    </div>
+
+ 
+    <div class="bg-gray-100 p-4 rounded">
+      <h3 class="text-xl font-semibold mb-2">Try it Yourself</h3>
+      <textarea id="codeEditor" class="w-full h-48 p-2 font-mono border rounded mb-2">
+<h1>Hello, WebBloom!</h1>
+<p>This is a test.</p>
+      </textarea>
+      <button onclick="runCode()" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">Run Code</button>
+      <div class="mt-4 border p-2 bg-white rounded">
+        <iframe id="preview" class="w-full h-40 border" sandbox="allow-scripts"></iframe>
+      </div>
+    </div>
+
+   
+    <div class="bg-blue-50 p-4 rounded">
+      <h3 class="text-xl font-bold mb-4">Quick Quiz</h3>
+
+      <form id="quizForm" class="space-y-4">
+       
+        <div>
+          <p class="font-medium">1. What does HTML stand for?</p>
+          <label><input type="radio" name="q1" value="a" class="mr-2">HyperText Markup Language</label><br>
+          <label><input type="radio" name="q1" value="b" class="mr-2">Hyper Tool Marking Language</label><br>
+          <label><input type="radio" name="q1" value="c" class="mr-2">HighText Machine Language</label>
+        </div>
+
+      
+        <div>
+          <p class="font-medium">2. Which tag is used for the largest heading?</p>
+          <label><input type="radio" name="q2" value="a" class="mr-2">&lt;h6&gt;</label><br>
+          <label><input type="radio" name="q2" value="b" class="mr-2">&lt;head&gt;</label><br>
+          <label><input type="radio" name="q2" value="c" class="mr-2">&lt;h1&gt;</label>
+        </div>
+
+        <button type="button" onclick="gradeQuiz()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded">Submit Answers</button>
+      </form>
+
+      <div id="quizResult" class="mt-4 font-semibold"></div>
+    </div>
+
+ 
+    <div class="flex justify-between">
+      <a href="../learn-html.html" class="text-blue-500 hover:underline">&larr; Back to HTML lessons Page</a>
+      <a href="lesson2.html" class="text-blue-500 hover:underline">Next Lesson &rarr;</a>
+    </div>
+
+    <!-- Lesson Completion -->
+    <div class="text-center mt-10">
+      <button id="completeBtn" onclick="updateProgress('Lesson 1', 100)"
+        class="bg-green-500 text-white px-6 py-3 rounded opacity-50 cursor-not-allowed" disabled>
+        ✅ Mark as Completed
+      </button>
+    </div>
+  </section>
+
+
+  <footer class="bg-pink-100 text-center p-4 mt-10">
+    <p class="text-sm text-gray-600">&copy; 2025 WebBloom</p>
+  </footer>
+
+ 
+  <script>
+    let quizPassed = false;
+    let codeRun = false;
+
+    function toggleDarkMode() {
+      document.getElementById('page').classList.toggle('dark-mode');
+    }
+
+    function runCode() {
+      const code = document.getElementById('codeEditor').value;
+      const iframe = document.getElementById('preview');
+      iframe.srcdoc = code;
+      codeRun = true;
+      enableCompleteButton();
+    }
+
+    function gradeQuiz() {
+      const answers = {
+        q1: "a",
+        q2: "c"
+      };
+      let score = 0;
+      for (const q in answers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === answers[q]) score++;
+      }
+
+      const result = document.getElementById('quizResult');
+      if (score === Object.keys(answers).length) {
+        result.textContent = `✅ Great job! You got all answers right!`;
+        result.className = "text-green-600 font-semibold";
+        quizPassed = true;
+        enableCompleteButton();
+      } else {
+        result.textContent = `❌ You got ${score} out of ${Object.keys(answers).length} correct. Try again!`;
+        result.className = "text-red-600 font-semibold";
+        quizPassed = false;
+      }
+    }
+
+    function enableCompleteButton() {
+      const btn = document.getElementById('completeBtn');
+      if (quizPassed && codeRun) {
+        btn.disabled = false;
+        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+      }
+    }
+
+    
+function updateProgress(topic, progress) {
+  fetch('../update_progress.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `topic=${encodeURIComponent(topic)}&progress=${progress}`
+  })
+  .then(response => response.text())
+  .then(result => {
+    console.log(result); 
+  });
+}
+
+
+window.onload = function () {
+  updateProgress('Lesson 1', 20); 
+};
+
+
+  </script>
+
+
+
+</body>
+</html>
