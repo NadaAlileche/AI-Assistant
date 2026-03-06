@@ -27,12 +27,6 @@ Die Idee: Studierende können jederzeit Fragen stellen, sich Inhalte erklären l
 - OpenAI / ChatGPT (für die Inhalte & Antworten)
 - Optional: React, Node.js, GitHub Pages
 
-👩‍💻 Unser Team
-  
--Eya Hmadi
--Hasnae Dahmmani
--Marceline Louise Bodo Kamdem
--Nada Alileche
 
 
 
